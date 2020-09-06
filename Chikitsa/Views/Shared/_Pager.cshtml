@@ -1,0 +1,73 @@
+﻿@model Chikitsa.Entities.QueryBO
+
+@helper GenerateAction(int pageNo)
+{
+RouteValueDictionary routeValue = new RouteValueDictionary();
+routeValue.Add("pageNumber", pageNo);
+routeValue.Add("QuestionPaperId", ViewData["QuestionPaperId"]);
+//var rout = new RouteValueDictionary(new { QuestionPaperId = ViewData["QuestionPaperId"] });
+    @Html.Raw(@Url.Action(Model.PagingRoute.Action, Model.PagingRoute.Controller, routeValue))
+}
+
+
+<div class="row">
+    <div class="col-sm-5">
+        <div class="dataTables_info" role="status" aria-live="polite">Showing @(Model.TotalRecords > 0 ? ((Model.PageNumber - 1) * Model.PageSize + 1) : 0)  to @(Model.TotalRecords > 0 ? (Model.PageNumber == (int)Math.Ceiling((double)((decimal)Model.TotalRecords / Model.PageSize ?? 5)) ? Model.TotalRecords : Model.PageNumber * Model.PageSize ?? 5) : 0 ) of @Model.TotalRecords entries</div>
+    </div>
+    <div class="col-sm-7">
+        <div class="dataTables_paginate paging_simple_numbers">
+            <ul class="pagination">
+                @{
+                    int pageCount = (int)Math.Ceiling((double)((decimal)Model.TotalRecords / Model.PageSize ?? 5));
+                    int pagerSpan = 5;
+                    int startIndex = Model.PageNumber > 1 && Model.PageNumber + pagerSpan - 1 < pagerSpan ? Model.PageNumber : 1;
+                    int endIndex = pageCount > pagerSpan ? pagerSpan : pageCount;
+
+                    if (Model.PageNumber > pagerSpan % 2)
+                    {
+                        endIndex = Model.PageNumber == 2 ? 5 : Model.PageNumber + 2;
+                    }
+                    else
+                    {
+                        endIndex = (pagerSpan - Model.PageNumber) + 1;
+                    }
+
+                    if (endIndex - (pagerSpan - 1) > startIndex)
+                    {
+                        startIndex = endIndex - (pagerSpan - 1);
+                    }
+
+                    if (endIndex > pageCount)
+                    {
+                        endIndex = pageCount; startIndex = ((endIndex - pagerSpan) + 1) > 0 ? (endIndex - pagerSpan) + 1 : 1;
+                    }
+
+                    if (Model.PageNumber > 1)
+                    {
+                        <li class="paginate_button "><a href="@GenerateAction(1)">First</a></li>
+                    }
+                    if (Model.PageNumber > 1)
+                    {
+                        <li class="paginate_button"><a href="@GenerateAction(Model.PageNumber - 1)"><<</a></li>
+                    }
+                    for (int i = startIndex; i <= endIndex; i++)
+                    {
+                        <li class="paginate_button @(@Model.PageNumber == i ? "active " : "")">
+                            @*@Ajax.ActionLink(i.ToString(), Model.PagingRoute.Action, Model.PagingRoute.Controller, new { pageNumber = i }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "lstUsers" })*@
+                            <a href="@(@Model.PageNumber == i ? "#" : GenerateAction(i).ToString() )">@(i.ToString())</a>
+                        </li>
+                    }
+                    if (Model.PageNumber < pageCount)
+                    {
+                        <li class="paginate_button"><a href="@GenerateAction(Model.PageNumber + 1)">>></a></li>
+                    }
+
+                    if (Model.PageNumber != pageCount)
+                    {
+                        <li class="paginate_button "><a href="@GenerateAction(pageCount)">Last</a></li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>

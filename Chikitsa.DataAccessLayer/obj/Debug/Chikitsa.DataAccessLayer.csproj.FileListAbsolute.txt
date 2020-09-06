@@ -1,0 +1,14 @@
+E:\Projects\Working\Chikitsa\Chikitsa.DataAccessLayer\bin\Debug\Chikitsa.DataAccessLayer.dll
+E:\Projects\Working\Chikitsa\Chikitsa.DataAccessLayer\bin\Debug\Chikitsa.DataAccessLayer.pdb
+E:\Projects\Working\Chikitsa\Chikitsa.DataAccessLayer\bin\Debug\Chikitsa.Entities.dll
+E:\Projects\Working\Chikitsa\Chikitsa.DataAccessLayer\bin\Debug\Chikitsa.Entities.pdb
+E:\Projects\Working\Chikitsa\Chikitsa.DataAccessLayer\obj\Debug\Chikitsa.DataAccessLayer.csprojResolveAssemblyReference.cache
+E:\Projects\Working\Chikitsa\Chikitsa.DataAccessLayer\obj\Debug\Chikitsa.DataAccessLayer.dll
+E:\Projects\Working\Chikitsa\Chikitsa.DataAccessLayer\obj\Debug\Chikitsa.DataAccessLayer.pdb
+D:\AjitProject\Chikitsa(3)\Chikitsa\Chikitsa.DataAccessLayer\bin\Debug\Chikitsa.DataAccessLayer.dll
+D:\AjitProject\Chikitsa(3)\Chikitsa\Chikitsa.DataAccessLayer\bin\Debug\Chikitsa.DataAccessLayer.pdb
+D:\AjitProject\Chikitsa(3)\Chikitsa\Chikitsa.DataAccessLayer\bin\Debug\Chikitsa.Entities.dll
+D:\AjitProject\Chikitsa(3)\Chikitsa\Chikitsa.DataAccessLayer\bin\Debug\Chikitsa.Entities.pdb
+D:\AjitProject\Chikitsa(3)\Chikitsa\Chikitsa.DataAccessLayer\obj\Debug\Chikitsa.DataAccessLayer.csprojResolveAssemblyReference.cache
+D:\AjitProject\Chikitsa(3)\Chikitsa\Chikitsa.DataAccessLayer\obj\Debug\Chikitsa.DataAccessLayer.dll
+D:\AjitProject\Chikitsa(3)\Chikitsa\Chikitsa.DataAccessLayer\obj\Debug\Chikitsa.DataAccessLayer.pdb

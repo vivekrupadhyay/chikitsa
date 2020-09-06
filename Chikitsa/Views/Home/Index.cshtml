@@ -1,0 +1,35 @@
+﻿
+@{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="box box-primary ">
+    <div class="box-header with-border">
+        <h3 class="box-title"> Home </h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body">
+        Start creating your amazing application!
+        <div id="map" style="width:100%;height:400px;"></div>
+    </div>
+    <div class="box-footer">
+        Footer
+    </div>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPr376rkLpIc2ZWDXFyD387WdbTwkjKb0&callback=initMap" async defer></script>
+<script type="text/javascript">
+    var map;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 19.0244, lng: 72.8438 },
+            zoom: 12
+        });
+    }
+</script>

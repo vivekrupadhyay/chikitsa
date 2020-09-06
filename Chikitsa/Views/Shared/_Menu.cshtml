@@ -1,0 +1,39 @@
+﻿@model Chikitsa.Entities.Layout
+
+@helper GetSubMenus(IEnumerable<Menu> siteMenu, Nullable<int> parentID)
+{
+foreach (var i in Model.lstMenu.Where(a => a.ParentId.Equals(parentID)))
+{
+    var submenu = Model.lstMenu.Where(a => a.ParentId.Equals(i.MenuId)).Count();
+    if (i.IsParent)
+    {
+            <li class="treeview">
+                <a href="#">
+                    <i class="@i.IconClass"></i>
+                    <span>@i.Title</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    @GetSubMenus(siteMenu, i.MenuId)
+                </ul>
+            </li>
+    }
+    else
+    {
+            <li class="@i.ActiveClass">
+                @*@Ajax.ActionLink(i.Title,i.Action,i.Controller,new AjaxOptions { UpdateTargetId= "dvBody" })*@
+                <a href="@Url.Action(@i.Action, @i.Controller)"><i class="@i.IconClass"></i> <span>@i.Title</span></a>
+            </li>
+
+    }
+}
+}
+
+<ul class="sidebar-menu">
+    @if (Model!= null && Model.lstMenu != null)
+    {
+        @GetSubMenus(Model.lstMenu, 0)
+    }
+</ul>

@@ -1,0 +1,12 @@
+﻿@model Chikitsa.Entities.Layout
+
+<ol class="breadcrumb">
+    @if (Model!= null && Model.lstBreadCrumb != null)
+    {
+        for (int i = Model.lstBreadCrumb.Count - 1; i >= 0; i--)
+        {
+            <li><a href="@Url.Action( Model.lstBreadCrumb[i].Action,  Model.lstBreadCrumb[i].Controller)">@Model.lstBreadCrumb[i].Name</a></li>
+        }
+    }
+</ol>
+

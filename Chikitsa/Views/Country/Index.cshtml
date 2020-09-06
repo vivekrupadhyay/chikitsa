@@ -1,0 +1,92 @@
+﻿@model Chikitsa.Entities.CountryMasterListVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="box box-success no-margin dvFilter">
+    <div class="box-body nopdbt">
+        @*@using (Ajax.BeginForm("ListFilter", "User", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "lstUsers" })){*@
+
+        @using (Html.BeginForm("Filter", "Country", FormMethod.Post, new { @class = "" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="objFilter.PageNumber" value="@Model.objFilter.PageNumber" />
+            <input type="hidden" name="objFilter.PageSize" value="@Model.objFilter.PageSize" />
+            <input type="hidden" name="objFilter.Sort" value="@Model.objFilter.Sort" />
+            <div class="form-group col-md-3">
+                <input type="text" class="form-control" name="objFilter.CountryName" value="@Model.objFilter.CountryName" placeholder="CountryName">
+            </div>
+            <div class="form-group col-md-2">
+                @Html.DropDownListFor(model => model.objFilter.Status, new List<SelectListItem>
+                                                    {
+                                                        new SelectListItem{ Text = "--Select Status--", Value = "" },
+                                                        new SelectListItem{ Text = "Active", Value = "1" },
+                                                        new SelectListItem{ Text = "Inactive", Value = "2" }
+                                                    }, new { @class = "form-control" })
+            </div>
+
+                <div class="form-group pull-right">
+
+                    <button type="submit" name="submit" value="Filter" class="btn btn-info  btn-flat btnFilter"><i class="fa fa-filter"></i></button>
+                    <button type="submit" name="submit" value="Clear" class="btn btn-default  btn-flat btnClear"><i class="fa fa-refresh"></i></button>
+                    <button type="button" class="btn btn-default  btn-flat " onclick="location.href='@Url.Action("Details", "Country")'"><i class="fa fa-plus"></i></button>
+                </div>
+        }
+    </div>
+</div>
+
+<div class="box box-info">
+    <div class="box-body">
+        <table id="example" class="table table-striped table-bordered dt-responsive nowrap kdtable">
+            <thead>
+                <tr>
+                    <th class="hidden">
+                        @Html.DisplayNameFor(model => model.lstCountryMaster[0].CountryID)
+                    </th>
+                   
+                    <th width="20%">
+                        @Html.DisplayNameFor(model => model.lstCountryMaster[0].CountryName)
+                    </th>
+                    <th width="20%">
+                        @Html.DisplayNameFor(model => model.lstCountryMaster[0].Status)
+                    </th>
+                    @*<th width="10%">
+                        @Html.DisplayNameFor(model => model.lstCountryMaster[0].Remark)
+                    </th>*@
+                    
+                    <th class="nosort">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.lstCountryMaster)
+                {
+                    <tr>
+                        <td class="hidden">
+                            @Html.DisplayFor(modelItem => item.CountryID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CountryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.strStatus)
+                        </td>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.Remark)
+                        </td>*@
+                        
+
+                        <td>
+                            <form method="post" action="@Url.Action("Action","Country")">
+                                <input type="hidden" name="objFilter.CountryID" value="@item.CountryID" />
+                                <div class="hidden FilterBO"></div>
+                                <button type="submit" name="submit" value="Edit" class="btn btn-info btn-xs btn-flat btnAction"><i class="fa fa-edit"> Edit</i></button>
+                                <button type="submit" name="submit" value="Delete" onclick="return SwalConfirm('Are you sure you want to delete this record?',$(this))" class="btn btn-danger btn-xs btn-flat btnAction noloader"><i class="fa fa-trash"> Delete</i></button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @Html.Partial("_Pager", Model.QueryBO)
+    </div>
+</div>

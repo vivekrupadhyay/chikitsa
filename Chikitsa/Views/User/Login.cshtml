@@ -1,0 +1,147 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/css/AdminLTE.min.css" />
+    @*<link rel="stylesheet" href="~/Content/fonts/font-awesome.min.css" />
+        <link rel="stylesheet" href="~/Content/fonts/ionicons.min.css" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/css/iCheck/green.css" />
+    <link rel="stylesheet" href="~/Content/css/style.css" />
+</head>
+<body class="hold-transition login-page">
+    <div class="loading" align="center">
+        <div class="sk-spinner sk-spinner-three-bounce">
+            <div class="sk-bounce1"></div>
+            <div class="sk-bounce2"></div>
+            <div class="sk-bounce3"></div>
+        </div>
+    </div>
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Admin</b>LTE</a>
+        </div>
+        <div class="login-box-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+
+            <form action="@Url.Action("Login","User")" method="post">
+                @Html.AntiForgeryToken()
+                <span class="text-danger field-validation-error">@ViewBag.LoginError</span>
+                <div class="form-group has-feedback">
+                    <input class="form-control " data-val="true" data-val-required="The Email/Mobile field is required." maxlength="150" name="username" type="text" value="" placeholder="Email/Mobile">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    <span class="text-danger field-validation-error" data-valmsg-for="username" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input class="form-control " data-val="true" data-val-required="The Password field is required." maxlength="20" name="password" type="password" value="" placeholder="Password">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <span class="text-danger field-validation-error" data-valmsg-for="password" data-valmsg-replace="true"></span>
+                </div>
+                <input type="hidden" name="ReturnUrl" class="returnUrl" />
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox" class="chkIcheck" name="remember"> Remember Me
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-success btn-block btn-flat" onclick="BindReturnUrl()">Sign In</button>
+                    </div>
+                </div>
+            </form>
+            @*<form action="@Url.Action("LoginExternal","User")" method="post">
+                @Html.AntiForgeryToken()*@
+                <div class="social-auth-links text-center">
+                    <p>- OR -</p>
+                    <button href="#" class="btn btn-block btn-social btn-facebook btn-flat">
+                        <i class="fa fa-facebook"></i> Sign in using
+                        Facebook
+                    </button>
+                    <button name="submit" value="GLogin" href="#" class="btn btn-block btn-social btn-google btn-flat" onclick="GoogleLogin()">
+                        <i class="fa fa-google-plus"></i> Sign in using
+                        Google+
+                    </button>
+                </div>
+            @*</form>*@
+            <a href="#">I forgot my password</a><br>
+            <a href="register.html" class="text-center">Register a new membership</a>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/icheck.min.js"></script>
+    <script src="~/Scripts/GLogin.js"></script>
+    <script>
+        function Unloader() {
+            $(".modalload").hide();
+            $(".loading").hide();
+            $('body').css("overflow-y", "auto");
+            var modal = $(".modal-dialog");
+            modal.css({ "z-index": "2050" });
+        }
+
+        function ShowProgress() {
+            var modal = $('<div />');
+            modal.addClass("modalload");
+            $('body').append(modal);
+            $('body').css("overflow-y", "hidden");
+            var loading = $(".loading");
+            loading.show();
+            var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+            var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+            loading.css({ top: top, left: left });
+            var modal = $(".modal-dialog");
+            modal.css({ "z-index": "1001" });
+        }
+
+        $(function () {
+            $('.chkIcheck').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green'
+            });
+            $("body").on("click", "input[type='button'],button:not(.noloader),a[href!='#']", function () {
+                if (this.type == "submit") {
+                    if ($("form").valid())
+                        ShowProgress();
+                }
+                else
+                    ShowProgress();
+            });
+        });
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+        function BindReturnUrl() {
+            @if (!string.IsNullOrEmpty(ViewBag.ReturnUrl))
+            {
+                <text>$(".returnUrl").val("@ViewBag.ReturnUrl");</text>
+            }
+            else
+            {
+               <text>$(".returnUrl").val(getUrlVars()["ReturnUrl"]);</text>
+            }
+        }
+        
+    </script>
+</body>
+</html>
